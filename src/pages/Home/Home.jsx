@@ -19,7 +19,7 @@ const Home = () => {
             the city from an immortal enemy.</p>
             <div className="hero-btns">
               <button><img src={play_icon} alt="" />Play</button>
-              <button><img src={info_icon} alt="" />Play</button>
+              <button><img src={info_icon} alt="" />info</button>
             </div>
         </div>
        </div>
