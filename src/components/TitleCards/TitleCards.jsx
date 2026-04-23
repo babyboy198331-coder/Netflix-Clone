@@ -11,24 +11,17 @@ const TitleCards = ({ title, category }) => {
       cardsRef.current.scrollLeft += event.deltaY
     }
   }
-
   useEffect(() => {
     const element = cardsRef.current
-
-    if (!element) return
-
+ if (!element) return
     element.addEventListener('wheel', handleWheel)
-
     return () => {
       element.removeEventListener('wheel', handleWheel)
-    }
-  }, [])
-
-  return (
+    }  }, [])
+return (
     <div className='title-cards'>
       <h2>{title ? title : 'Popular on Netflix'}</h2>
-
-      <div className="card-list" ref={cardsRef}>
+<div className="card-list" ref={cardsRef}>
         {cards_data.map((card, index) => (
           <div className="card" key={index}>
             <img src={card.image} alt={card.title || "card"} />
