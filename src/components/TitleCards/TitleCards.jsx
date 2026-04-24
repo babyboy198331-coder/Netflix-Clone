@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './TitleCards.css'
+import { Link } from 'react-router-dom'
 
 const TitleCards = ({ title, category }) => {
   const [apiData, setApiData] = useState([])
@@ -9,7 +10,8 @@ const TitleCards = ({ title, category }) => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1M2RkMjUyZmUxZjc0ZDdkNmY4ZDk5NGYzYzg4MzQwMCIsIm5iZiI6MTc3Njg3Nzk2OC4wOCwic3ViIjoiNjllOTAxOTBkNWYzZTk3YTQzMDk3ZjdiIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.RMY2TgQdU6e_hze1rC-j3dIMh05Coaz_CA4SHQ-R57o'
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1M2RkMjUyZmUxZjc0ZDdkNmY4ZDk5NGYzYzg4MzQwMCIsIm5iZiI6MTc3Njg3Nzk2OC4wOCwic3ViIjoiNjllOTAxOTBkNWYzZTk3YTQzMDk3ZjdiIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.RMY2TgQdU6e_hze1rC-j3dIMh05Coaz_CA4SHQ-R57o'
     }
   }
 
@@ -37,7 +39,7 @@ const TitleCards = ({ title, category }) => {
 
     const handleWheel = (e) => {
       e.preventDefault()
-      el.scrollLeft += e.deltaY
+      el.scrollBy({ left: e.deltaY, behavior: 'smooth' })
     }
 
     el.addEventListener('wheel', handleWheel, { passive: false })
@@ -53,7 +55,11 @@ const TitleCards = ({ title, category }) => {
 
       <div className="card-list" ref={cardsRef}>
         {apiData.map((movie) => (
-          <div className="card" key={movie.id}>
+          <Link
+            to={`/player/${movie.id}`}
+            className="card"
+            key={movie.id}
+          >
             {movie.backdrop_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
@@ -61,7 +67,7 @@ const TitleCards = ({ title, category }) => {
               />
             )}
             <p>{movie.original_title}</p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
