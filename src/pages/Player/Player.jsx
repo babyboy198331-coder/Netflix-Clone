@@ -1,24 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Player.css'
 import back_arrow_icon from '../../assets/back_arrow_icon.png'
 
 const Player = () => {
+
+  const [apiData, setApiData] = useState({
+    name: "",
+    key: "",
+    published_at: "",
+    type: "",
+  })
+
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1M2RkMjUyZmUxZjc0ZDdkNmY4ZDk5NGYzYzg4MzQwMCIsIm5iZiI6MTc3Njg3Nzk2OC4wOCwic3ViIjoiNjllOTAxOTBkNWYzZTk3YTQzMDk3ZjdiIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.RMY2TgQdU6e_hze1rC-j3dIMh05Coaz_CA4SHQ-R57o'
+    }
+  }
+
+  useEffect(() => {
+    fetch('https://api.themoviedb.org/3/movie/1226863/videos?language=en-US', options)
+      .then(res => res.json())
+      .then(data => {
+        if (data.results && data.results.length > 0) {
+          setApiData(data.results[0])
+        }
+      })
+      .catch(err => console.error(err))
+  }, [])
+
   return (
     <div className='player'>
-      <img src={back_arrow_icon} alt="" />
+      <img src={back_arrow_icon} alt="back" />
+
       <iframe
         width='90%'
         height='90%'
-        src='https://www.youtube.com/embed/YQQD67N5pi0'
+        src={`https://www.youtube.com/embed/${apiData.key}`}
         title='trailer'
         frameBorder='0'
         allowFullScreen
       ></iframe>
 
       <div className="player-info">
-        <p>Published Date</p>
-        <p>Name</p>
-        <p>Type</p>
+        <p>{apiData.published_at.slice(0, 10)}</p>
+        <p>{apiData.name}</p>
+        <p>{apiData.type}</p>
       </div>
     </div>
   )
