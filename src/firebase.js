@@ -11,6 +11,7 @@ import {
   collection,
   getFirestore
 } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 
 const firebaseConfig = {
@@ -45,8 +46,7 @@ const signUp = async (name, email, password) => {
     return user;
   } catch (error) {
     console.log("SIGNUP ERROR:", error);
-    alert(error.message);
-    throw error;
+    toast.error(error.code);
   }
 };
 
@@ -59,8 +59,7 @@ const login = async (email, password) => {
     return userCredential.user;
   } catch (error) {
     console.log("LOGIN ERROR:", error);
-    alert(error.message);
-    throw error;
+    toast.error(error.code);
   }
 };
 
