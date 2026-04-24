@@ -17,7 +17,7 @@ const App = () => {
          navigate('/');
       } else {
         console.log("Logged Out");
-         navigate('/login';)
+         navigate('/login');
       }
     });
 
