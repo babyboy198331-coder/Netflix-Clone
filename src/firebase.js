@@ -46,7 +46,7 @@ const signUp = async (name, email, password) => {
     return user;
   } catch (error) {
     console.log("SIGNUP ERROR:", error);
-    toast.error(error.code);
+    toast.error(error.code.split('/')[1].split('-').join(" "));
   }
 };
 
@@ -59,7 +59,7 @@ const login = async (email, password) => {
     return userCredential.user;
   } catch (error) {
     console.log("LOGIN ERROR:", error);
-    toast.error(error.code);
+    toast.error(error.code.split('/')[1].split('-').join(" "));
   }
 };
 

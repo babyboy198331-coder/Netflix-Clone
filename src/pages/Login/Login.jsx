@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import logo from '../../assets/logo.png';
 import { login, signUp } from '../../firebase';
+import netflix_spinner from '../../assets/netflix_spinner.gif';
 
 const Login = () => {
 
@@ -9,9 +10,11 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const userAuth = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
+    setLoading(true);
 
     try {
       if (signState === "Sign In") {
@@ -22,69 +25,77 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className='login'>
-
-      <img src={logo} className='login-logo' alt="Logo" />
-
-      <div className="login-form">
-        <h1>{signState}</h1>
-
-        <form onSubmit={userAuth}>
-
-          {signState === "Sign Up" &&
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              placeholder='Your name'
-            />
-          }
-
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder='Email'
-          />
-
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder='Password'
-          />
-
-          <button type="submit">{signState}</button>
-
-          <div className="form-help">
-            <div className="remember">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me</label>
-            </div>
-
-            <p>Need Help?</p>
-          </div>
-        </form>
-
-        <div className="form-switch">
-          {signState === "Sign In" ?
-            <p>
-              New to Netflix?
-              <span onClick={() => setSignState("Sign Up")}> Sign Up Now</span>
-            </p>
-            :
-            <p>
-              Already have an Account?
-              <span onClick={() => setSignState("Sign In")}> Sign In Now</span>
-            </p>
-          }
-        </div>
-
+    loading ? (
+      <div className="login-spinner">
+        <img src={netflix_spinner} alt="Loading..." />
       </div>
-    </div>
+    ) : (
+      <div className='login'>
+
+        <img src={logo} className='login-logo' alt="Logo" />
+
+        <div className="login-form">
+          <h1>{signState}</h1>
+
+          <form onSubmit={userAuth}>
+
+            {signState === "Sign Up" && (
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                type="text"
+                placeholder='Your name'
+              />
+            )}
+
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder='Email'
+            />
+
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder='Password'
+            />
+
+            <button type="submit">{signState}</button>
+
+            <div className="form-help">
+              <div className="remember">
+                <input type="checkbox" id="remember" />
+                <label htmlFor="remember">Remember me</label>
+              </div>
+
+              <p>Need Help?</p>
+            </div>
+          </form>
+
+          <div className="form-switch">
+            {signState === "Sign In" ? (
+              <p>
+                New to Netflix?
+                <span onClick={() => setSignState("Sign Up")}> Sign Up Now</span>
+              </p>
+            ) : (
+              <p>
+                Already have an Account?
+                <span onClick={() => setSignState("Sign In")}> Sign In Now</span>
+              </p>
+            )}
+          </div>
+
+        </div>
+      </div>
+    )
   );
 };
 
