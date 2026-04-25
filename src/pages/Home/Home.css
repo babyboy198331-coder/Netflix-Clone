@@ -97,3 +97,17 @@
         padding: 4%;
     }
 }
+
+@media (max-width: 500px){
+    .caption-img{
+        display: none;
+    }
+    .btn img{
+        width: 15px;
+    }
+    .btn{
+        padding: 4px 10px;
+        gap: 5px;
+        font-size: 10px;
+    }
+}
